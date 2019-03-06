@@ -4,16 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "parcel src/index.html"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "parcel-plugin-static-files-copy": "^2.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "babel-preset-react-app": "^7.0.1"
+  },
+  "staticFiles": {
+    "staticPath": "resource"
   }
 }

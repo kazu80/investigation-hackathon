@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Pic from './components/pic';
 
 class Application extends React.Component {
     render () {
         return (
-          <h1>Hello World</h1>
+            <div>
+                <h1>Hello World</h1>
+                <Pic />
+            </div>
         );
     }
 }
