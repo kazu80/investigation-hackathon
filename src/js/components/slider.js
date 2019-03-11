@@ -205,7 +205,7 @@ export default class Slider extends React.Component {
     }
 
     getPics () {
-        const pics = this.props.pics.map (pic => <Pic path={pic} />);
+        const pics = this.props.pics.map (pic => <Pic key={pic.toString()} path={pic} />);
         return (pics);
     }
 
