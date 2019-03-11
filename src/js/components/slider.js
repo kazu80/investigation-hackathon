@@ -24,6 +24,54 @@ z-index: 1;
 }
 `;
 
+const Detected = styled.div`
+position: absolute;
+top: 40%;
+left: 50%;
+transform: translate(-50%, -50%);
+font-size: 10px;
+color: #5CFF33;
+font-weight: bold;
+line-height: 100%;
+z-index: 1;
+`;
+
+const DetectEffect02 = keyframes`
+0% {
+transform: translate(-50%, -50%) scale(1);
+opacity: 1;
+}
+100% {
+transform: translate(-50%, -50%) scale(2);
+opacity: 0.1;
+}
+`;
+
+const EffectSquare = styled.div`
+position: absolute;
+top: 40%;
+left: 50%;
+transform: translate(-50%, -50%) scale(1);
+width: 60px;
+height: 60px;
+border: 1px solid #5CFF33;
+z-index: 1;
+opacity: 1;
+animation: ${DetectEffect02} 1000ms infinite linear;
+`;
+
+const EffectSquare01 = styled(EffectSquare)`
+animation-delay: unset;
+`;
+
+const EffectSquare02 = styled(EffectSquare)`
+animation-delay: 333ms;
+`;
+
+const EffectSquare03 = styled(EffectSquare)`
+animation-delay: 666ms;
+`;
+
 const slide01 = keyframes`
 0% {
 transform: translateX(100%);
@@ -164,6 +212,10 @@ export default class Slider extends React.Component {
     render () {
         return (
             <Mask>
+                <Detected>Detecting</Detected>
+                <EffectSquare01/>
+                <EffectSquare02/>
+                <EffectSquare03/>
                 <Wrapper01 time>
                     {this.getPics()}
                 </Wrapper01>
