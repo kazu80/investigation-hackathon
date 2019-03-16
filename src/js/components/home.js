@@ -3,9 +3,42 @@ import styled, {keyframes} from 'styled-components';
 import Pic from './styled/pic';
 import Wrapper from './styled/wrapper';
 import Panel from  './styled/panel';
-import { Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
-export class Home extends React.Component {
+class Home extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activePanel: false,
+            activePanelOpacity: false,
+            activeUpload: false,
+            activePics: false,
+        };
+
+        FB.getLoginStatus((response) => {
+            if (response.status !== 'connected') {
+                this.props.history.push('/login')
+            }
+        });
+    }
+
+    componentDidMount () {
+        setTimeout(() => this.setState({activePanel: true}), 3000);
+
+    }
+
+    handleTransitionEnd(e) {
+        switch (e.propertyName) {
+            case 'transform':
+                setTimeout(() => this.setState({activePanelOpacity: true}), 2000);
+                break;
+            case 'background-color':
+                setTimeout(() => this.setState({activePics: true}), 5000);
+                break;
+            default:
+                console.log(e.propertyName);
+        }
+    }
 
     getAnimationTime() {
         return String(30000);
@@ -14,9 +47,9 @@ export class Home extends React.Component {
     render () {
         return (
             <Wrapper>
-                <Panel direction='column'>
-                    <ButtonLink to='/search'>TARGET UPLOAD</ButtonLink>
-                    <Mask>
+                <Panel active={this.state.activePanel} opacity={this.state.activePanelOpacity.toString()} onTransitionEnd={(e) => this.handleTransitionEnd(e)} direction='column'>
+                    <ButtonLink active={this.state.activeUpload}>TARGET UPLOAD</ButtonLink>
+                    <Mask active={this.state.activePics}>
                         <WrapperPic animation='slide01' time={this.getAnimationTime()}>
                             <Pic src="/images/pic01.png" />
                             <Pic src="/images/pic02.png" />
@@ -36,7 +69,22 @@ export class Home extends React.Component {
     }
 }
 
-const ButtonLink = styled(Link)`
+export default withRouter(Home);
+
+const puffInHor = keyframes`
+  0% {
+    transform: scaleX(2);
+    filter: blur(2px);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleX(1);
+    filter: blur(0px);
+    opacity: 1;
+  }
+`;
+
+const ButtonLink = styled.a`
 display: block;
 position: relative;
 width: 400px;
@@ -49,6 +97,9 @@ text-decoration: none;
 text-align: center;
 outline: none;
 box-shadow:0 3px 6px 0 rgba(0,0,0,0.53);
+opacity: 0;
+animation: ${puffInHor} 200ms cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+animation-play-state: ${props => props.active === 'true' ? 'unset' : 'paused'};
 
 &:before {
 content: "";
@@ -80,6 +131,7 @@ flex-direction: row;
 margin: 0 auto;
 width: 800px;
 overflow: hidden;
+opacity: ${props => props.active === true ? '1' : '0'};
 `;
 
 const slide01 = keyframes`
