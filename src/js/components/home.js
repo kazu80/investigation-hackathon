@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import Pic from './pic';
 
 export class Home extends React.Component {
@@ -8,12 +8,20 @@ export class Home extends React.Component {
             <Wrapper>
                 <Panel>
                     <Button>TARGET UPLOAD</Button>
-                    <WrapperPic>
-                        <Pic path="/images/pic01.png" w200 />
-                        <Pic path="/images/pic02.png" w200 />
-                        <Pic path="/images/pic03.png" w200 />
-                        <Pic path="/images/pic04.png" w200 />
-                    </WrapperPic>
+                    <Mask>
+                        <WrapperPic animation='slide01'>
+                            <Pic path="/images/pic01.png" w200 />
+                            <Pic path="/images/pic02.png" w200 />
+                            <Pic path="/images/pic03.png" w200 />
+                            <Pic path="/images/pic04.png" w200 />
+                        </WrapperPic>
+                        <WrapperPic animation='slide02'>
+                            <Pic path="/images/pic01.png" w200 />
+                            <Pic path="/images/pic02.png" w200 />
+                            <Pic path="/images/pic03.png" w200 />
+                            <Pic path="/images/pic04.png" w200 />
+                        </WrapperPic>
+                    </Mask>
                 </Panel>
             </Wrapper>
         );
@@ -73,4 +81,37 @@ const WrapperPic = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: center;
+animation-name: ${props => props.animation === 'slide01' ? slide01 : slide02};
+animation-duration: 3s;
+animation-delay: ${props => props.animation === 'slide01' ? '-1.5s' : 'unset'};
+animation-timing-function: linear;
+animation-iteration-count: infinite;
+`;
+
+const Mask = styled.div`
+display: flex;
+flex-direction: row;
+margin: 0 auto;
+width: 800px;
+overflow: hidden;
+`;
+
+const slide01 = keyframes`
+from {
+transform: translateX(100%);
+}
+
+to {
+transform: translateX(-100%);
+}
+`;
+
+const slide02 = keyframes`
+from {
+transform: translateX(0);
+}
+
+to {
+transform: translateX(-200%);
+}
 `;
