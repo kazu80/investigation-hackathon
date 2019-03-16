@@ -1,10 +1,9 @@
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
 import Wrapper from './styled/wrapper';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
-export class Login extends React.Component {
-
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,16 +14,15 @@ export class Login extends React.Component {
         }
     }
 
-    componentDidMount() {
+    handleClickWrapper (e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-    }
-
-    handleClickWrapper () {
-        this.setState({activePanel: true})
+        this.setState({activePanel: true});
+        console.log('foo',this.state.activePanel);
     }
 
     handleTransitionEnd(e) {
-
         switch (e.propertyName) {
             case 'transform':
                 this.setState({activePanelOpacity: true});
@@ -40,24 +38,46 @@ export class Login extends React.Component {
     handleAnimationEnd(e) {
         switch (e.animationName) {
             case 'iEJYHk':
-                this.setState({activeButton: true});
+                setTimeout(() => this.setState({activeButton: true}), 600);
                 break;
             default:
                 console.log(e.animationName);
         }
     }
 
+    handleClickLinkButton(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.setState({activePanel: false});
+        this.props.history.push('/home');
+    }
+
     render () {
         return (
-            <Wrapper onClick={() => this.handleClickWrapper()}>
+            <Wrapper onClick={(e) => this.handleClickWrapper(e)}>
+                <VideoBackground src="/video/movie01.mov" autoPlay loop muted />
                 <Panel active={this.state.activePanel} opacity={this.state.activePanelOpacity.toString()} onTransitionEnd={(e) => this.handleTransitionEnd(e)}>
                     <Title active={this.state.activeTitle.toString()} onAnimationEnd={(e) => this.handleAnimationEnd(e)}>INVESTIGATION</Title>
-                    <ButtonLink to="/home" active={this.state.activeButton.toString()}>LOGIN</ButtonLink>
+                    <ButtonLink active={this.state.activeButton.toString()} onClick={(e) => this.handleClickLinkButton(e)}>LOGIN</ButtonLink>
                 </Panel>
             </Wrapper>
         );
     }
 }
+
+export default withRouter(Login);
+
+const VideoBackground = styled.video`
+position: fixed;
+right: 0;
+bottom: 0;
+min-width: 100%;
+min-height: 100%;
+width: 100%;
+height: 100%;
+background-color: #000000;
+`;
 
 const Panel = styled.div`
 display: flex;
@@ -71,6 +91,7 @@ height: 400px;
 background: rgba(255, 255, 255, ${props => props.opacity === 'true' ? '.7' : '.3'});
 transform: scale(${props => props.active === true ? '1' : '0'});
 transition: all 200ms ease-in-out;
+z-index: 1;
 `;
 
 const textFocusIn = keyframes`
@@ -110,7 +131,7 @@ const puffInHor = keyframes`
   }
 `;
 
-const ButtonLink = styled(Link)`
+const ButtonLink = styled.a`
 position: relative;
 width: 400px;
 height: 80px;
@@ -123,7 +144,7 @@ text-align: center;
 outline: none;
 box-shadow:0 3px 6px 0 rgba(0,0,0,0.53);
 opacity: 0;
-animation: ${puffInHor} 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+animation: ${puffInHor} 200ms cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
 animation-play-state: ${props => props.active === 'true' ? 'unset' : 'paused'};
 
 &:before {
