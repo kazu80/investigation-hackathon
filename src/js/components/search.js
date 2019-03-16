@@ -16,12 +16,14 @@ export class Search extends React.Component {
     render () {
         return (
             <Wrapper>
-                <Panel>
+                <Panel justify='center'>
                     <WrapperSearch>
-                        <Slider pics={pics}></Slider>
-                        <WrapperPicWithTitle>
+                        <WrapperPicWithHit text='HIT'>
+                            <Slider pics={pics}></Slider>
+                        </WrapperPicWithHit>
+                        <WrapperPicWithTarget>
                             <Pic src="/images/pic02.png" />
-                        </WrapperPicWithTitle>
+                        </WrapperPicWithTarget>
                     </WrapperSearch>
                 </Panel>
             </Wrapper>
@@ -29,32 +31,40 @@ export class Search extends React.Component {
     }
 }
 
-const foo = keyframes`
-from {
-width: 200px;
-}
-
-to {
-width: 600px;
-}
-`;
-
 const WrapperSearch = styled.div`
+position: relative;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-margin: 0 auto;
 width: 600px;
-animation-name: ${foo};
-animation-duration: 3000ms;
-animation-timing-function: ease-out;
 `;
 
+const hit = keyframes`
+0% {
+  left: 50%
+}
 
+100% {
+  left: 20%
+}
+`;
 
-const WrapperPicWithTitle = styled.div`
-position: relative;
-display: block;
+const target = keyframes`
+0% {
+  left: 50%
+}
+
+100% {
+  left: 80%
+}
+`;
+
+const WrapperPicWithTarget = styled.div`
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+animation: ${target} 1000ms ease-out forwards;
 
 &::before {
   content: "TARGET";
@@ -67,5 +77,15 @@ display: block;
   color: #707070;
   font-weight: bold;
   text-align: center;
+  text-shadow:0 2px 2px rgba(0,0,0,0.65);
+}
+`;
+
+const WrapperPicWithHit = styled(WrapperPicWithTarget)`
+animation: ${hit} 1000ms ease-out forwards;
+
+&::before {
+  content: "HIT";
+  color: #5CFF33;
 }
 `;
