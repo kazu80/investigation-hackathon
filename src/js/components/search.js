@@ -19,7 +19,9 @@ export class Search extends React.Component {
                 <Panel>
                     <WrapperSearch>
                         <Slider pics={pics}></Slider>
-                        <Pic src="/images/pic02.png" />
+                        <WrapperPicWithTitle>
+                            <Pic src="/images/pic02.png" />
+                        </WrapperPicWithTitle>
                     </WrapperSearch>
                 </Panel>
             </Wrapper>
@@ -32,4 +34,22 @@ display: flex;
 flex-direction: row;
 margin: 0 auto;
 width: 600px;
+`;
+
+const WrapperPicWithTitle = styled.div`
+position: relative;
+display: block;
+
+&::before {
+  content: "TARGET";
+  position: absolute;
+  top: -35px;
+  left: 0;
+  width: 100%;
+  font-size: 30px;
+  line-height: 100%;
+  color: #707070;
+  font-weight: bold;
+  text-align: center;
+}
 `;
