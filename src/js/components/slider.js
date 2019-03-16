@@ -6,7 +6,6 @@ const Mask = styled.div`
 position: relative;
 display: flex;
 flex-direction: row;
-margin: 0 auto;
 width: 200px;
 overflow: hidden;
 

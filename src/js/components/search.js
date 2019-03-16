@@ -29,12 +29,28 @@ export class Search extends React.Component {
     }
 }
 
+const foo = keyframes`
+from {
+width: 200px;
+}
+
+to {
+width: 600px;
+}
+`;
+
 const WrapperSearch = styled.div`
 display: flex;
 flex-direction: row;
+justify-content: space-between;
 margin: 0 auto;
 width: 600px;
+animation-name: ${foo};
+animation-duration: 3000ms;
+animation-timing-function: ease-out;
 `;
+
+
 
 const WrapperPicWithTitle = styled.div`
 position: relative;
