@@ -3,19 +3,24 @@ import styled, {keyframes} from 'styled-components';
 import Pic from './pic';
 
 export class Home extends React.Component {
+
+    getAnimationTime() {
+        return String(30000);
+    }
+
     render () {
         return (
             <Wrapper>
                 <Panel>
                     <Button>TARGET UPLOAD</Button>
                     <Mask>
-                        <WrapperPic animation='slide01'>
+                        <WrapperPic animation='slide01' time={this.getAnimationTime()}>
                             <Pic path="/images/pic01.png" w200 />
                             <Pic path="/images/pic02.png" w200 />
                             <Pic path="/images/pic03.png" w200 />
                             <Pic path="/images/pic04.png" w200 />
                         </WrapperPic>
-                        <WrapperPic animation='slide02'>
+                        <WrapperPic animation='slide02' time={this.getAnimationTime()}>
                             <Pic path="/images/pic01.png" w200 />
                             <Pic path="/images/pic02.png" w200 />
                             <Pic path="/images/pic03.png" w200 />
@@ -82,8 +87,8 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 animation-name: ${props => props.animation === 'slide01' ? slide01 : slide02};
-animation-duration: 3s;
-animation-delay: ${props => props.animation === 'slide01' ? '-1.5s' : 'unset'};
+animation-duration: ${props => props.time ? props.time + 'ms' : '3000ms'};
+animation-delay: ${props => props.animation === 'slide01' ? props.time ? (parseInt(props.time) / 2) * -1 + 'ms' : '-1.5s' : 'unset' };
 animation-timing-function: linear;
 animation-iteration-count: infinite;
 `;
