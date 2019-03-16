@@ -3,6 +3,7 @@ import styled, {keyframes} from 'styled-components';
 import Pic from './styled/pic';
 import Wrapper from './styled/wrapper';
 import Panel from  './styled/panel';
+import { Link } from 'react-router-dom';
 
 export class Home extends React.Component {
 
@@ -14,7 +15,7 @@ export class Home extends React.Component {
         return (
             <Wrapper>
                 <Panel direction='column'>
-                    <Button>TARGET UPLOAD</Button>
+                    <ButtonLink to='/search'>TARGET UPLOAD</ButtonLink>
                     <Mask>
                         <WrapperPic animation='slide01' time={this.getAnimationTime()}>
                             <Pic src="/images/pic01.png" />
@@ -35,7 +36,7 @@ export class Home extends React.Component {
     }
 }
 
-const Button = styled.a`
+const ButtonLink = styled(Link)`
 display: block;
 position: relative;
 width: 400px;

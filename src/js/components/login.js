@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Wrapper from './styled/wrapper';
+import { Link } from 'react-router-dom';
 
 export class Login extends React.Component {
     render () {
@@ -8,7 +9,7 @@ export class Login extends React.Component {
             <Wrapper>
                 <Panel>
                     <Title>INVESTIGATION</Title>
-                    <Button href="#">LOGIN</Button>
+                    <ButtonLink to="/home">LOGIN</ButtonLink>
                 </Panel>
             </Wrapper>
         );
@@ -36,7 +37,7 @@ color: #707070;
 text-align: center;
 `;
 
-const Button = styled.a`
+const ButtonLink = styled(Link)`
 display: block;
 position: relative;
 width: 400px;
