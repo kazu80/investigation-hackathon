@@ -13,6 +13,7 @@ class Home extends React.Component {
             activePanelOpacity: false,
             activeUpload: false,
             activePics: false,
+            timeAnimation: 500,
         };
 
         FB.getLoginStatus((response) => {
@@ -33,7 +34,27 @@ class Home extends React.Component {
                 setTimeout(() => this.setState({activePanelOpacity: true}), 2000);
                 break;
             case 'background-color':
-                setTimeout(() => this.setState({activePics: true}), 5000);
+                setTimeout(() => {
+                    this.setState({activePics: true});
+
+                    let c = 0;
+                    let i = 0;
+                    const intervalKey = setInterval(() => {
+                        i++;
+
+                        if (i === c + (this.state.timeAnimation / 500)) {
+                            c = i;
+                            this.setState({timeAnimation: this.state.timeAnimation + 500}); // 1000
+                            if (this.state.timeAnimation >= 3000) {
+                                clearInterval(intervalKey);
+
+                                console.log('done!');
+                                this.setState({activeUpload: true});
+                            }
+                        }
+                    }, 500);
+                }, 5000);
+
                 break;
             default:
                 console.log(e.propertyName);
@@ -41,22 +62,23 @@ class Home extends React.Component {
     }
 
     getAnimationTime() {
-        return String(30000);
+        // return String(30000);
+        return String(1000);
     }
 
     render () {
         return (
             <Wrapper>
                 <Panel active={this.state.activePanel} opacity={this.state.activePanelOpacity.toString()} onTransitionEnd={(e) => this.handleTransitionEnd(e)} direction='column'>
-                    <ButtonLink active={this.state.activeUpload}>TARGET UPLOAD</ButtonLink>
+                    <ButtonLink active={this.state.activeUpload.toString()}>TARGET UPLOAD</ButtonLink>
                     <Mask active={this.state.activePics}>
-                        <WrapperPic animation='slide01' time={this.getAnimationTime()}>
+                        <WrapperPic animation='slide01' time={this.state.timeAnimation}>
                             <Pic src="/images/pic01.png" />
                             <Pic src="/images/pic02.png" />
                             <Pic src="/images/pic03.png" />
                             <Pic src="/images/pic04.png" />
                         </WrapperPic>
-                        <WrapperPic animation='slide02' time={this.getAnimationTime()}>
+                        <WrapperPic animation='slide02' time={this.state.timeAnimation}>
                             <Pic src="/images/pic01.png" />
                             <Pic src="/images/pic02.png" />
                             <Pic src="/images/pic03.png" />

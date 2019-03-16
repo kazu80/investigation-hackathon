@@ -15,6 +15,16 @@ class Login extends React.Component {
         };
 
         FB.getLoginStatus((response) => {
+
+            if (response.status === 'connected') {
+                FB.api('/me?fields=id,name,picture', function(response) {
+                    console.log(response);
+                    // console.log('Good to see you, ' + response.name + '.');
+                });
+            }
+
+
+
             // statusChangeCallback(response);
         });
     }
@@ -63,7 +73,7 @@ class Login extends React.Component {
             } else {
                 // The person is not logged into this app or we are unable to tell.
             }
-        }, {scope: 'public_profile,email'});
+        }, {scope: 'public_profile,email,user_friends'});
     }
 
     render () {
