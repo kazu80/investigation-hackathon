@@ -11,7 +11,15 @@ class Login extends React.Component {
             activePanelOpacity: false,
             activeTitle: false,
             activeButton: false,
-        }
+            activeSuccess: false,
+        };
+
+        FB.getLoginStatus((response) => {
+
+            console.log('foo', response);
+
+            // statusChangeCallback(response);
+        });
     }
 
     handleClickWrapper (e) {
@@ -19,7 +27,6 @@ class Login extends React.Component {
         e.stopPropagation();
 
         this.setState({activePanel: true});
-        console.log('foo',this.state.activePanel);
     }
 
     handleTransitionEnd(e) {
@@ -50,7 +57,16 @@ class Login extends React.Component {
         e.stopPropagation();
 
         this.setState({activePanel: false});
-        this.props.history.push('/home');
+
+        FB.login((response) => {
+            if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                this.setState({activeSuccess: true});
+                setTimeout(() => this.props.history.push('/home'), 3400);
+            } else {
+                // The person is not logged into this app or we are unable to tell.
+            }
+        }, {scope: 'public_profile,email'});
     }
 
     render () {
@@ -61,6 +77,7 @@ class Login extends React.Component {
                     <Title active={this.state.activeTitle.toString()} onAnimationEnd={(e) => this.handleAnimationEnd(e)}>INVESTIGATION</Title>
                     <ButtonLink active={this.state.activeButton.toString()} onClick={(e) => this.handleClickLinkButton(e)}>LOGIN</ButtonLink>
                 </Panel>
+                <SuccessText active={this.state.activeSuccess.toString()}>SUCCESS</SuccessText>
             </Wrapper>
         );
     }
@@ -158,4 +175,30 @@ height: 45px;
 background: url("/images/icon-fb.svg") center no-repeat;
 background-size: contain;
 }
+`;
+
+const FocusInContract = keyframes`
+  0% {
+    letter-spacing: 1em;
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+`;
+
+const SuccessText = styled.div`
+display: ${props => props.active === 'true' ? 'block' : 'none'};
+position: absolute;
+font-size: 60px;
+line-height: 100%;
+color: #5CFF33;
+letter-spacing: 5px;
+text-shadow:0 2px 2px rgba(100,100,100,0.65);
+z-index: 1;
+opacity: 0;
+animation: ${FocusInContract} 600ms 1000ms cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+animation-play-state: ${props => props.active === 'true' ? 'unset' : 'paused'};
 `;
