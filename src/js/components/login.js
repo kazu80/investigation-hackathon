@@ -1,15 +1,58 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import Wrapper from './styled/wrapper';
 import { Link } from 'react-router-dom';
 
 export class Login extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            activePanel: false,
+            activePanelOpacity: false,
+            activeTitle: false,
+            activeButton: false,
+        }
+    }
+
+    componentDidMount() {
+
+    }
+
+    handleClickWrapper () {
+        this.setState({activePanel: true})
+    }
+
+    handleTransitionEnd(e) {
+
+        switch (e.propertyName) {
+            case 'transform':
+                this.setState({activePanelOpacity: true});
+                break;
+            case 'background-color':
+                this.setState({activeTitle: true});
+                break;
+            default:
+                console.log(e.propertyName);
+        }
+    }
+
+    handleAnimationEnd(e) {
+        switch (e.animationName) {
+            case 'iEJYHk':
+                this.setState({activeButton: true});
+                break;
+            default:
+                console.log(e.animationName);
+        }
+    }
+
     render () {
         return (
-            <Wrapper>
-                <Panel>
-                    <Title>INVESTIGATION</Title>
-                    <ButtonLink to="/home">LOGIN</ButtonLink>
+            <Wrapper onClick={() => this.handleClickWrapper()}>
+                <Panel active={this.state.activePanel} opacity={this.state.activePanelOpacity.toString()} onTransitionEnd={(e) => this.handleTransitionEnd(e)}>
+                    <Title active={this.state.activeTitle.toString()} onAnimationEnd={(e) => this.handleAnimationEnd(e)}>INVESTIGATION</Title>
+                    <ButtonLink to="/home" active={this.state.activeButton.toString()}>LOGIN</ButtonLink>
                 </Panel>
             </Wrapper>
         );
@@ -25,20 +68,49 @@ padding-top: 92px;
 padding-bottom: 160px;
 width: 700px;
 height: 400px;
-background: linear-gradient(45deg, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+background: rgba(255, 255, 255, ${props => props.opacity === 'true' ? '.7' : '.3'});
+transform: scale(${props => props.active === true ? '1' : '0'});
+transition: all 200ms ease-in-out;
+`;
+
+const textFocusIn = keyframes`
+  0% {
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
 `;
 
 const Title = styled.div`
 display: inline-block;
 width: 100%;
 font-size: 30px;
+font-weight: bold;
 line-height: 100%;
 color: #707070;
 text-align: center;
+opacity: 0;
+animation: ${textFocusIn} 400ms cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+animation-play-state: ${props => props.active === 'true' ? 'unset' : 'paused'};
+`;
+
+const puffInHor = keyframes`
+  0% {
+    transform: scaleX(2);
+    filter: blur(2px);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleX(1);
+    filter: blur(0px);
+    opacity: 1;
+  }
 `;
 
 const ButtonLink = styled(Link)`
-display: block;
 position: relative;
 width: 400px;
 height: 80px;
@@ -50,6 +122,9 @@ text-decoration: none;
 text-align: center;
 outline: none;
 box-shadow:0 3px 6px 0 rgba(0,0,0,0.53);
+opacity: 0;
+animation: ${puffInHor} 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+animation-play-state: ${props => props.active === 'true' ? 'unset' : 'paused'};
 
 &:before {
 content: "";
