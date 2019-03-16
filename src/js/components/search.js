@@ -4,6 +4,7 @@ import Slider from './slider';
 import Wrapper from './styled/wrapper';
 import Panel from './styled/panel';
 import Pic from './styled/pic';
+import VideoWall from './styled/videoWall';
 
 const pics = [
     '/images/pic01.png',
@@ -16,6 +17,7 @@ export class Search extends React.Component {
     render () {
         return (
             <Wrapper>
+                <VideoWall src="/video/movie01.mov" autoPlay loop muted />
                 <Panel justify='center'>
                     <WrapperSearch>
                         <WrapperPicWithHit text='HIT'>

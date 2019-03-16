@@ -12,4 +12,8 @@ width: 1000px;
 height: 598.21px;
 background: linear-gradient(45deg, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
 overflow: hidden;
+background: rgba(255, 255, 255, ${props => props.opacity === 'true' ? '.7' : '.3'});
+transform: scale(${props => props.active === true ? '1' : '0'});
+transition: all 200ms ease-in-out;
+z-index: 1;
 `;

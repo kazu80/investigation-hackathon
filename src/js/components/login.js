@@ -15,9 +15,6 @@ class Login extends React.Component {
         };
 
         FB.getLoginStatus((response) => {
-
-            console.log('foo', response);
-
             // statusChangeCallback(response);
         });
     }
@@ -72,7 +69,6 @@ class Login extends React.Component {
     render () {
         return (
             <Wrapper onClick={(e) => this.handleClickWrapper(e)}>
-                <VideoBackground src="/video/movie01.mov" autoPlay loop muted />
                 <Panel active={this.state.activePanel} opacity={this.state.activePanelOpacity.toString()} onTransitionEnd={(e) => this.handleTransitionEnd(e)}>
                     <Title active={this.state.activeTitle.toString()} onAnimationEnd={(e) => this.handleAnimationEnd(e)}>INVESTIGATION</Title>
                     <ButtonLink active={this.state.activeButton.toString()} onClick={(e) => this.handleClickLinkButton(e)}>LOGIN</ButtonLink>
@@ -84,17 +80,6 @@ class Login extends React.Component {
 }
 
 export default withRouter(Login);
-
-const VideoBackground = styled.video`
-position: fixed;
-right: 0;
-bottom: 0;
-min-width: 100%;
-min-height: 100%;
-width: 100%;
-height: 100%;
-background-color: #000000;
-`;
 
 const Panel = styled.div`
 display: flex;
