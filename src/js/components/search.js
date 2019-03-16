@@ -20,6 +20,11 @@ export class Search extends React.Component {
                     <WrapperSearch>
                         <WrapperPicWithHit text='HIT'>
                             <Slider pics={pics}></Slider>
+                            <HitPanel>
+                                <ProfileText>Grace Hall-Hemingway</ProfileText>
+                                <ProfileText>Age : 32</ProfileText>
+                                <ProfileText>Women</ProfileText>
+                            </HitPanel>
                         </WrapperPicWithHit>
                         <WrapperPicWithTarget>
                             <Pic src="/images/pic02.png" />
@@ -37,16 +42,6 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 width: 600px;
-`;
-
-const hit = keyframes`
-0% {
-  left: 50%
-}
-
-100% {
-  left: 20%
-}
 `;
 
 const target = keyframes`
@@ -81,11 +76,48 @@ animation: ${target} 1000ms ease-out forwards;
 }
 `;
 
+const hit = keyframes`
+0% {
+  left: 50%
+}
+
+100% {
+  left: 20%
+}
+`;
+
+
 const WrapperPicWithHit = styled(WrapperPicWithTarget)`
 animation: ${hit} 1000ms ease-out forwards;
 
 &::before {
   content: "HIT";
   color: #5CFF33;
+}
+`;
+
+const HitPanel = styled.div`
+position: absolute;
+left: 0;
+bottom: 0;
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 100%;
+height: 134px;
+background-color: rgba(124, 201, 64, .7);
+color: #ffffff;
+
+`;
+
+const ProfileText = styled.div`
+margin-bottom: 10px;
+width: 100%;
+font-size: 16px;
+line-height: 150%;
+text-align: center;
+
+&:last-child {
+margin-bottom: 0;
 }
 `;
