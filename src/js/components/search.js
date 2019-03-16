@@ -1,5 +1,9 @@
 import React from 'react';
+import styled, {keyframes} from 'styled-components';
 import Slider from './slider';
+import Wrapper from './styled/wrapper';
+import Panel from './styled/panel';
+import Pic from './styled/pic';
 
 const pics = [
     '/images/pic01.png',
@@ -11,9 +15,21 @@ const pics = [
 export class Search extends React.Component {
     render () {
         return (
-            <div>
-                <Slider pics={pics}></Slider>
-            </div>
+            <Wrapper>
+                <Panel>
+                    <WrapperSearch>
+                        <Slider pics={pics}></Slider>
+                        <Pic src="/images/pic02.png" />
+                    </WrapperSearch>
+                </Panel>
+            </Wrapper>
         );
     }
 }
+
+const WrapperSearch = styled.div`
+display: flex;
+flex-direction: row;
+margin: 0 auto;
+width: 600px;
+`;

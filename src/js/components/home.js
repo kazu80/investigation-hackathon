@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
-import Pic from './pic';
+import Pic from './styled/pic';
+import Wrapper from './styled/wrapper';
+import Panel from  './styled/panel';
 
 export class Home extends React.Component {
 
@@ -11,20 +13,20 @@ export class Home extends React.Component {
     render () {
         return (
             <Wrapper>
-                <Panel>
+                <Panel direction='column'>
                     <Button>TARGET UPLOAD</Button>
                     <Mask>
                         <WrapperPic animation='slide01' time={this.getAnimationTime()}>
-                            <Pic path="/images/pic01.png" w200 />
-                            <Pic path="/images/pic02.png" w200 />
-                            <Pic path="/images/pic03.png" w200 />
-                            <Pic path="/images/pic04.png" w200 />
+                            <Pic src="/images/pic01.png" />
+                            <Pic src="/images/pic02.png" />
+                            <Pic src="/images/pic03.png" />
+                            <Pic src="/images/pic04.png" />
                         </WrapperPic>
                         <WrapperPic animation='slide02' time={this.getAnimationTime()}>
-                            <Pic path="/images/pic01.png" w200 />
-                            <Pic path="/images/pic02.png" w200 />
-                            <Pic path="/images/pic03.png" w200 />
-                            <Pic path="/images/pic04.png" w200 />
+                            <Pic src="/images/pic01.png" />
+                            <Pic src="/images/pic02.png" />
+                            <Pic src="/images/pic03.png" />
+                            <Pic src="/images/pic04.png" />
                         </WrapperPic>
                     </Mask>
                 </Panel>
@@ -32,28 +34,6 @@ export class Home extends React.Component {
         );
     }
 }
-
-const Wrapper = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-height: 100%;
-background: url("/images/wall01.jpg") no-repeat center center;
-background-size: cover;
-`;
-
-const Panel = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
-padding-top: 62px;
-padding-bottom: 40px;
-width: 1000px;
-height: 598.21px;
-background: linear-gradient(45deg, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-`;
 
 const Button = styled.a`
 display: block;

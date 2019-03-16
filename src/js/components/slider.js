@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, {keyframes} from 'styled-components';
-import Pic from './pic';
+import Pic from './styled/pic';
 
 const Mask = styled.div`
 position: relative;
@@ -205,7 +205,7 @@ export default class Slider extends React.Component {
     }
 
     getPics () {
-        const pics = this.props.pics.map (pic => <Pic key={pic.toString()} path={pic} />);
+        const pics = this.props.pics.map (pic => <Pic key={pic.toString()} src={pic} />);
         return (pics);
     }
 

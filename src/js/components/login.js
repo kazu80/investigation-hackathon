@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Wrapper from './styled/wrapper';
 
 export class Login extends React.Component {
     render () {
@@ -13,16 +14,6 @@ export class Login extends React.Component {
         );
     }
 }
-
-const Wrapper = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-height: 100%;
-background: url("/images/wall01.jpg") no-repeat center center;
-background-size: cover;
-`;
 
 const Panel = styled.div`
 display: flex;
