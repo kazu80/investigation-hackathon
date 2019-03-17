@@ -12,7 +12,9 @@ class Home extends React.Component {
             activePanel: false,
             activePanelOpacity: false,
             activeUpload: false,
+            activeUploadPic: false,
             activePics: false,
+            transformPics: false,
             timeAnimation: 500,
         };
 
@@ -25,7 +27,6 @@ class Home extends React.Component {
 
     componentDidMount () {
         setTimeout(() => this.setState({activePanel: true}), 3000);
-
     }
 
     handleTransitionEnd(e) {
@@ -48,7 +49,6 @@ class Home extends React.Component {
                             if (this.state.timeAnimation >= 3000) {
                                 clearInterval(intervalKey);
 
-                                console.log('done!');
                                 this.setState({activeUpload: true});
                             }
                         }
@@ -61,8 +61,20 @@ class Home extends React.Component {
         }
     }
 
+    handleUpload(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.setState({transformPics: true});
+
+        setTimeout(() => {
+            this.setState({activeUpload: false});
+            this.setState({timeAnimation: 20000});
+            this.setState({activeUploadPic: true})
+        }, 1000);
+    }
+
     getAnimationTime() {
-        // return String(30000);
         return String(1000);
     }
 
@@ -70,21 +82,24 @@ class Home extends React.Component {
         return (
             <Wrapper>
                 <Panel active={this.state.activePanel} opacity={this.state.activePanelOpacity.toString()} onTransitionEnd={(e) => this.handleTransitionEnd(e)} direction='column'>
-                    <ButtonLink active={this.state.activeUpload.toString()}>TARGET UPLOAD</ButtonLink>
-                    <Mask active={this.state.activePics}>
-                        <WrapperPic animation='slide01' time={this.state.timeAnimation}>
-                            <Pic src="/images/pic01.png" />
-                            <Pic src="/images/pic02.png" />
-                            <Pic src="/images/pic03.png" />
-                            <Pic src="/images/pic04.png" />
-                        </WrapperPic>
-                        <WrapperPic animation='slide02' time={this.state.timeAnimation}>
-                            <Pic src="/images/pic01.png" />
-                            <Pic src="/images/pic02.png" />
-                            <Pic src="/images/pic03.png" />
-                            <Pic src="/images/pic04.png" />
-                        </WrapperPic>
-                    </Mask>
+                    <ButtonLink active={this.state.activeUpload.toString()} onClick={(e) => this.handleUpload(e)}>TARGET UPLOAD</ButtonLink>
+                    <WrapperContents>
+                        <Mask active={this.state.activePics} transform={this.state.transformPics.toString()}>
+                            <WrapperPic animation='slide01' time={this.state.timeAnimation}>
+                                <Pic src="/images/pic01.png" />
+                                <Pic src="/images/pic02.png" />
+                                <Pic src="/images/pic03.png" />
+                                <Pic src="/images/pic04.png" />
+                            </WrapperPic>
+                            <WrapperPic animation='slide02' time={this.state.timeAnimation}>
+                                <Pic src="/images/pic01.png" />
+                                <Pic src="/images/pic02.png" />
+                                <Pic src="/images/pic03.png" />
+                                <Pic src="/images/pic04.png" />
+                            </WrapperPic>
+                        </Mask>
+                        <UploadPic active={this.state.activeUploadPic.toString()} src="/images/pic01.png" />
+                    </WrapperContents>
                 </Panel>
             </Wrapper>
         );
@@ -107,7 +122,7 @@ const puffInHor = keyframes`
 `;
 
 const ButtonLink = styled.a`
-display: block;
+display: ${props => props.active === 'true' ? 'block' : 'none'};
 position: relative;
 width: 400px;
 height: 80px;
@@ -148,12 +163,16 @@ animation-iteration-count: infinite;
 `;
 
 const Mask = styled.div`
+position: absolute;
+left: ${props => props.transform === 'true' ? '30%' : '50%'};
+bottom: 40px;
+transform: translateX(-50%);
 display: flex;
 flex-direction: row;
-margin: 0 auto;
-width: 800px;
+width: ${props => props.transform === 'true' ? '200px' : '800px'};
 overflow: hidden;
 opacity: ${props => props.active === true ? '1' : '0'};
+transition: all 400ms ease-out;
 `;
 
 const slide01 = keyframes`
@@ -174,4 +193,19 @@ transform: translateX(0);
 to {
 transform: translateX(-200%);
 }
+`;
+
+const WrapperContents = styled.div`
+display: flex;
+flex-direction: row;
+`;
+
+const UploadPic = styled.img`
+display: block;
+position: absolute;
+right: 30%;
+bottom: 40px;
+transform: translateX(50%);
+opacity: ${props => props.active === 'true' ? '1' : '0'};
+transition: opacity 400ms ease-out;
 `;
